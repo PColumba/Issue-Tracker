@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import IssuesList from './IssuesList';
-import { Issue } from './model';
+import IssuesList from '../views/IssuesList/IssuesList';
+import { Issue } from '../model';
 import Container from "@mui/material/Container";
 import { Typography } from '@mui/material';
 
-function App() {
+const Issues: React.FC = () => {
   const [issues, setIssues] = useState<Issue[]>([])
   
   useEffect(() => {
@@ -20,4 +20,4 @@ function App() {
   );
 }
 
-export default App;
+export default Issues;
