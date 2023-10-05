@@ -1,7 +1,8 @@
-import { Issue } from "../../model";
+import { Issue, IssueState } from "../../model";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from "react-router-dom";
+import StatusChip from "../../components/StatusChip";
 
 const IssuesList: React.FC<{ issues: Issue[] }> = ({ issues }) => {
   return (
@@ -20,15 +21,22 @@ const IssueView: React.FC<{ issue: Issue }> = ( { issue }) => {
     aria-controls="issue-content"
     id={id}
   >
-    <Typography role={"listitem"}>{title}</Typography>
+    <Title state={state} title={title} />
   </AccordionSummary>
   <AccordionDetails>
-    <Typography>
+    <Typography variant={"body1"}>
       {description}
     </Typography>
     <Button variant="outlined" onClick={() => navigate(`/issues/${id}`)}>Edit</Button>
   </AccordionDetails>
 </Accordion>
+}
+
+const Title: React.FC<{title: string, state: IssueState}> = ({title, state}) => {
+  return <Box display={"flex"} flexDirection={"row"} alignItems={"center"} alignContent={"center"} gap={1}>
+    <StatusChip status={state} editable={false}/>
+    <Typography variant="h5" role={"listitem"}>{title}</Typography>
+  </Box>
 }
 
 export default IssuesList;

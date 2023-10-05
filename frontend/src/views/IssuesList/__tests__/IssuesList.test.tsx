@@ -1,13 +1,21 @@
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import IssuesList from "../IssuesList";
-import { Issue } from '../../../model';
+import { Issue, IssueState } from '../../../model';
+import { useNavigate } from "react-router-dom";
+
+const mockNavigate = jest.fn((path: string) => {})
+
+// We need to mock it since this is only to be used when in router context
+jest.mock("react-router-dom", () => ({
+  useNavigate: () => mockNavigate
+}))
+
 
 const testIssues: Issue[] = [
-  { id: "1", title: "Issue 1", description: "I am an issue 1", state: "Pending" },
-  { id: "2", title: "Issue 2", description: "I am an issue 2", state: "Open" },
-  { id: "3", title: "Issue 3", description: "I am an issue 3", state: "Closed" },
+  { id: "1", title: "Issue 1", description: "I am an issue 1", state: IssueState.PENDING },
+  { id: "2", title: "Issue 2", description: "I am an issue 2", state: IssueState.OPEN },
+  { id: "3", title: "Issue 3", description: "I am an issue 3", state: IssueState.CLOSED },
 ]
 
 test('All provided issues are rendered, only title is visible in list view', async () => {
@@ -26,7 +34,7 @@ test('When user clicks an issue, it will expand and the description will be visi
   render(<IssuesList issues={testIssues} />)
 
   // ACT
-  await userEvent.click(screen.getByText(testIssues[0].title))
+  fireEvent.click(screen.getByText(testIssues[0].title))
   
   // ASSERT
   expect(screen.getByText(testIssues[0].title)).toBeVisible()
@@ -37,9 +45,9 @@ test('When user expands an issue, he can choose to edit the issue.', async () =>
   render(<IssuesList issues={testIssues} />)
 
   // ACT
-  await userEvent.click(screen.getByText(testIssues[0].title))
-  await userEvent.click(screen.getByRole("Edit"))
+  fireEvent.click(screen.getByText(testIssues[0].title))
+  fireEvent.click(screen.getAllByText("Edit")[0])
   
-  // ASSERT
-  // Navigation occurs
+  // ASSERT naviagation was triggered
+  expect(mockNavigate).toHaveBeenCalledWith(`/issues/${testIssues[0].id}`)
 })
