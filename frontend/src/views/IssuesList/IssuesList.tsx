@@ -1,4 +1,4 @@
-import { Issue, IssueState } from "../../model";
+import { Issue, IssueStatus } from "../../model";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ const IssueView: React.FC<{ issue: Issue }> = ( { issue }) => {
 </Accordion>
 }
 
-const Title: React.FC<{title: string, state: IssueState}> = ({title, state}) => {
+const Title: React.FC<{title: string, state: IssueStatus}> = ({title, state}) => {
   return <Box display={"flex"} flexDirection={"row"} alignItems={"center"} alignContent={"center"} gap={1}>
     <StatusChip status={state} editable={false}/>
     <Typography variant="h5" role={"listitem"}>{title}</Typography>

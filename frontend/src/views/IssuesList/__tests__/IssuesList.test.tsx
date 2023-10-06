@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import IssuesList from "../IssuesList";
-import { Issue, IssueState } from '../../../model';
+import { Issue, IssueStatus } from '../../../model';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useNavigate } from "react-router-dom";
 
@@ -14,9 +14,9 @@ jest.mock("react-router-dom", () => ({
 
 
 const testIssues: Issue[] = [
-  { id: "1", title: "Issue 1", description: "I am an issue 1", status: IssueState.PENDING },
-  { id: "2", title: "Issue 2", description: "I am an issue 2", status: IssueState.OPEN },
-  { id: "3", title: "Issue 3", description: "I am an issue 3", status: IssueState.CLOSED },
+  { id: "1", title: "Issue 1", description: "I am an issue 1", status: IssueStatus.PENDING },
+  { id: "2", title: "Issue 2", description: "I am an issue 2", status: IssueStatus.OPEN },
+  { id: "3", title: "Issue 3", description: "I am an issue 3", status: IssueStatus.CLOSED },
 ]
 
 test('All provided issues are rendered, only title is visible in list view', async () => {

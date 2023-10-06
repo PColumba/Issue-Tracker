@@ -1,4 +1,4 @@
-export enum IssueState {
+export enum IssueStatus {
   OPEN = "Open",
   PENDING = "Pending",
   CLOSED = "Closed"
@@ -8,17 +8,17 @@ export interface Issue {
   id: string,
   title: string,
   description: string,
-  status: IssueState
+  status: IssueStatus
 }
 
-export const getPossibleStateUpdates = (state: IssueState) => {
+export const getPossibleStateUpdates = (state: IssueStatus) => {
   switch (state)  {
-    case IssueState.OPEN:
-      return [IssueState.CLOSED, IssueState.PENDING]
-    case IssueState.CLOSED:
+    case IssueStatus.OPEN:
+      return [IssueStatus.CLOSED, IssueStatus.PENDING]
+    case IssueStatus.CLOSED:
       return []
-    case IssueState.PENDING:
-      return [IssueState.CLOSED]
+    case IssueStatus.PENDING:
+      return [IssueStatus.CLOSED]
     default:
       return []
   }

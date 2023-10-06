@@ -3,11 +3,11 @@ import '@testing-library/jest-dom';
 import * as service from "../../service";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import rrd from "react-router-dom"; 
-import { Issue, IssueState } from '../../model';
+import { Issue, IssueStatus } from '../../model';
 import EditIssue from '../EditIssue';
 
 const mockService = service
-const testIssue: Issue = { id: "1", title: "Issue 1", description: "I am an issue 1", status: IssueState.PENDING }
+const testIssue: Issue = { id: "1", title: "Issue 1", description: "I am an issue 1", status: IssueStatus.PENDING }
 const mockId = testIssue.id
 
 // We need to mock it since router hooks can only be used when in router context
@@ -49,8 +49,8 @@ test('When error ocurres, error message is displayed', async () => {
 
 test('When the status is open user can change it to pending or closed', async () => {
   // ARRANGE
-  const testIssueOpen: Issue = { ...testIssue, status: IssueState.OPEN}
-  const testIssueClosed: Issue = { ...testIssue, status: IssueState.PENDING}
+  const testIssueOpen: Issue = { ...testIssue, status: IssueStatus.OPEN}
+  const testIssueClosed: Issue = { ...testIssue, status: IssueStatus.PENDING}
 
   //@ts-ignore
   mockService.getIssue.mockResolvedValue(testIssueOpen)
@@ -62,17 +62,17 @@ test('When the status is open user can change it to pending or closed', async ()
   const editButton = await screen.findByRole("button")
   fireEvent.click(editButton)
   const statusSelect = await screen.findByTestId("status-select")
-  fireEvent.change(statusSelect, { target: { value: IssueState.PENDING}})
+  fireEvent.change(statusSelect, { target: { value: IssueStatus.PENDING}})
   
   const editButtonAfterChange = await screen.findByRole("button")
-  expect(editButtonAfterChange).toHaveTextContent(IssueState.PENDING)
+  expect(editButtonAfterChange).toHaveTextContent(IssueStatus.PENDING)
 
 })
 
 test('When the status is pedning user can change it to closed', async () => {
   // ARRANGE
-  const testIssuePending: Issue = { ...testIssue, status: IssueState.PENDING}
-  const testIssueClosed: Issue = { ...testIssue, status: IssueState.CLOSED}
+  const testIssuePending: Issue = { ...testIssue, status: IssueStatus.PENDING}
+  const testIssueClosed: Issue = { ...testIssue, status: IssueStatus.CLOSED}
 
   //@ts-ignore
   mockService.getIssue.mockResolvedValue(testIssuePending)
@@ -84,15 +84,15 @@ test('When the status is pedning user can change it to closed', async () => {
   const editButton = await screen.findByRole("button")
   fireEvent.click(editButton)
   const statusSelect = await screen.findByTestId("status-select")
-  fireEvent.change(statusSelect, { target: { value: IssueState.CLOSED}})
+  fireEvent.change(statusSelect, { target: { value: IssueStatus.CLOSED}})
   
   const editButtonAfterChange = await screen.findByTestId("issue-status-chip")
-  expect(editButtonAfterChange).toHaveTextContent(IssueState.CLOSED)
+  expect(editButtonAfterChange).toHaveTextContent(IssueStatus.CLOSED)
 })
 
 test('When the status is closed user should not be able to change it', async () => {
   // ARRANGE
-  const testIssueClosed = { ...testIssue, state: IssueState.CLOSED}
+  const testIssueClosed = { ...testIssue, state: IssueStatus.CLOSED}
 
   //@ts-ignore
   mockService.getIssue.mockResolvedValue(testIssueClosed)

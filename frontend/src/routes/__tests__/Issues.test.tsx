@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Issues from '../Issues';
 import * as service from "../../service";
-import { IssueState } from '../../model';
+import { IssueStatus } from '../../model';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import rrd from "react-router-dom"; 
 
@@ -23,7 +23,7 @@ test('When waiting for service request, loading is displayed, after that data is
 
   // ARRANGE
   //@ts-ignore
-  mockService.getIssues.mockResolvedValue([{ id: "1", title: "Issue 1", description: "I am an issue 1", state: IssueState.PENDING }])
+  mockService.getIssues.mockResolvedValue([{ id: "1", title: "Issue 1", description: "I am an issue 1", state: IssueStatus.PENDING }])
   render(<Issues />)
 
   // ASSERT Loding visible

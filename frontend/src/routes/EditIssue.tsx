@@ -1,7 +1,7 @@
 import { Alert, Box, CircularProgress, Container, Select, Typography } from "@mui/material"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-import { IssueState, getPossibleStateUpdates } from "../model"
+import { IssueStatus, getPossibleStateUpdates } from "../model"
 import useAsyncValue, { ActionState } from "../hooks/useAsyncValue"
 import { getIssue, updateIssue } from "../service"
 import StatusChip from "../components/StatusChip"
@@ -22,13 +22,13 @@ const EditIssue: React.FC = () => {
     setOpen(true);
   };
 
-  const handleStatusUpade = (value: IssueState | undefined) => {
+  const handleStatusUpade = (value: IssueStatus | undefined) => {
     setOpen(false)
     if(value) {
       setIssue({ type: ActionState.LOADING })
       updateIssue(id!, value)
-        .then(issue => setIssue(({ type: ActionState.VALUE, value: issue})))
-        .catch(error => setIssue({ type: ActionState.ERROR, error}))
+        .then(issue => { setIssue(({ type: ActionState.VALUE, value: issue}))})
+        .catch(error => { setIssue({ type: ActionState.ERROR, error})})
     }
   }
 
@@ -45,7 +45,7 @@ const EditIssue: React.FC = () => {
   }
 
   const { title, description, status: state } = issue.value
-  const possibleStateUpdates: IssueState[] = getPossibleStateUpdates(state)
+  const possibleStateUpdates: IssueStatus[] = getPossibleStateUpdates(state)
 
   return <Container maxWidth="md">
     <Box display="flex" flexDirection="column" gap={2}>
@@ -61,10 +61,10 @@ const EditIssue: React.FC = () => {
 
 }
 
-const UpdateStatusDialog: React.FC<{open: boolean, onClose: (value: IssueState | undefined) => void, options: IssueState[]}> = ({open, onClose, options}) => {
+const UpdateStatusDialog: React.FC<{open: boolean, onClose: (value: IssueStatus | undefined) => void, options: IssueStatus[]}> = ({open, onClose, options}) => {
 
   const handleChange = (event: SelectChangeEvent) => {
-    onClose(event.target.value as IssueState)
+    onClose(event.target.value as IssueStatus)
   };
 
   return (
