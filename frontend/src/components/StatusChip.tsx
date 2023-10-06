@@ -9,13 +9,16 @@ const colorStyleMap = {
   [IssueState.OPEN]: {backgroundColor: colors.blue[300], color: "whitesmoke"},
 }
 
-const StatusChip: React.FC<{ editable: boolean, status: IssueState}> = ({editable, status}) => {
-  return editable ? <Chip 
-      icon={<EditIcon />} 
+const StatusChip: React.FC<{ editable?: boolean, status: IssueState, onClick?: () => void}> = ({editable, status, onClick}) => {
+  return editable ? <Chip
+      data-testid="issue-status-chip"
+      onClick={onClick}
+      icon={<EditIcon fontSize="medium" color="primary" sx={{ color: "whitesmoke"}}/>} 
       label={status} 
       sx={colorStyleMap[status]}
     /> : 
-    <Chip 
+    <Chip
+      data-testid="issue-status-chip"
       label={status} 
       sx={colorStyleMap[status]}
     />
