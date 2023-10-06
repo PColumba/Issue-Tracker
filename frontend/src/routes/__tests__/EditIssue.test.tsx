@@ -3,11 +3,11 @@ import '@testing-library/jest-dom';
 import * as service from "../../service";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import rrd from "react-router-dom"; 
-import { IssueState } from '../../model';
+import { Issue, IssueState } from '../../model';
 import EditIssue from '../EditIssue';
 
 const mockService = service
-const testIssue = { id: "1", title: "Issue 1", description: "I am an issue 1", state: IssueState.PENDING }
+const testIssue: Issue = { id: "1", title: "Issue 1", description: "I am an issue 1", status: IssueState.PENDING }
 const mockId = testIssue.id
 
 // We need to mock it since router hooks can only be used when in router context
@@ -29,7 +29,7 @@ test('When waiting for service request, loading is displayed, after that issue d
 
   // ASSERT after awaiting data will be visible
   expect(await screen.findByText(testIssue.title)).toBeVisible()
-  expect(await screen.findByText(testIssue.state)).toBeVisible()
+  expect(await screen.findByText(testIssue.status)).toBeVisible()
   expect(await screen.findByText(testIssue.description)).toBeVisible()
 
 })
@@ -49,8 +49,8 @@ test('When error ocurres, error message is displayed', async () => {
 
 test('When the status is open user can change it to pending or closed', async () => {
   // ARRANGE
-  const testIssueOpen = { ...testIssue, state: IssueState.OPEN}
-  const testIssueClosed = { ...testIssue, state: IssueState.PENDING}
+  const testIssueOpen: Issue = { ...testIssue, status: IssueState.OPEN}
+  const testIssueClosed: Issue = { ...testIssue, status: IssueState.PENDING}
 
   //@ts-ignore
   mockService.getIssue.mockResolvedValue(testIssueOpen)
@@ -71,8 +71,8 @@ test('When the status is open user can change it to pending or closed', async ()
 
 test('When the status is pedning user can change it to closed', async () => {
   // ARRANGE
-  const testIssuePending = { ...testIssue, state: IssueState.PENDING}
-  const testIssueClosed = { ...testIssue, state: IssueState.CLOSED}
+  const testIssuePending: Issue = { ...testIssue, status: IssueState.PENDING}
+  const testIssueClosed: Issue = { ...testIssue, status: IssueState.CLOSED}
 
   //@ts-ignore
   mockService.getIssue.mockResolvedValue(testIssuePending)

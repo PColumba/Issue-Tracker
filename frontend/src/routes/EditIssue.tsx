@@ -14,8 +14,8 @@ import { SelectChangeEvent } from '@mui/material/Select';
 
 
 const EditIssue: React.FC = () => {
-  const { id } = useParams<{id: string}>()
-  const [issue, setIssue] = useAsyncValue(() => getIssue(id!))
+  const id = Number(useParams<{id: string}>().id!)
+  const [issue, setIssue] = useAsyncValue(() => getIssue(id))
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -44,7 +44,7 @@ const EditIssue: React.FC = () => {
     </Container>
   }
 
-  const { title, description, state } = issue.value
+  const { title, description, status: state } = issue.value
   const possibleStateUpdates: IssueState[] = getPossibleStateUpdates(state)
 
   return <Container maxWidth="md">

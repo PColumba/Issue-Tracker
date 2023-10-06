@@ -9,6 +9,7 @@ router.get("/issues", async (req: Request, res: Response) => {
   try {
     issues = await getIssues()
   } catch(e: unknown) {
+    console.log(e)
     return res.sendStatus(500)
   }
   

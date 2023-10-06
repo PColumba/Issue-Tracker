@@ -1,18 +1,21 @@
 import { Issue, IssueState } from "./model"
 
+//ToDo: either check for proper response schemas at runtime with io-ts or be optimistic and use something that supports generic types for responses
 export const getIssues = async () => {
-  const issues: Issue[] = [
-    { id: "1", title: "Issue 1", description: "I am an issue 1", state: IssueState.PENDING },
-    { id: "2", title: "Issue 2", description: "I am an issue 2", state: IssueState.OPEN },
-    { id: "3", title: "Issue 3", description: "I am an issue 3", state: IssueState.CLOSED },
-  ]
-  return issues
+  return fetch("/issues").then(res => res.json()) as unknown as Issue[]
 }
 
-export const getIssue = async (id: string) => {
-  return { id: id, title: "Issue", description: `I am an issue with id: ${id}. DSASdads asd .a sdasd asd asd.asd ad asd asd asd ad asd asd asd asd ad asd asd d`, state: IssueState.PENDING }
+export const getIssue = async (id: number) => {
+  return fetch(`/issues/${id}`).then(res => res.json()) as unknown as Issue
 }
 
-export const updateIssue = async (id: string, state: IssueState) => {
-  return { id: id, title: "Issue", description: `I am an issue with id: ${id}. DSASdads asd .a sdasd asd asd.asd ad asd asd asd ad asd asd asd asd ad asd asd d`, state: state }
+export const updateIssue = async (id: number, state: IssueState) => {
+  return fetch(`/issues/${id}`, { 
+      method: "patch",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ state })
+    }).then(res => res.json()) as unknown as Issue
 }

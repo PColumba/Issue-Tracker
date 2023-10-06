@@ -13,7 +13,7 @@ const IssuesList: React.FC<{ issues: Issue[] }> = ({ issues }) => {
 }
 
 const IssueView: React.FC<{ issue: Issue }> = ( { issue }) => {
-  const { id, title, description, state } = issue
+  const { id, title, description, status: state } = issue
   const navigate = useNavigate()
   return <Accordion>
   <AccordionSummary

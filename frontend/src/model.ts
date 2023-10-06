@@ -8,7 +8,7 @@ export interface Issue {
   id: string,
   title: string,
   description: string,
-  state: IssueState
+  status: IssueState
 }
 
 export const getPossibleStateUpdates = (state: IssueState) => {
