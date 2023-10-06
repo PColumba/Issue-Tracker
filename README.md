@@ -17,3 +17,10 @@ $> docker compose up
 $> cd frontend
 $> npm run start
 ```
+
+##### Run Test (currently only for UI)
+```bash
+$> cd frontend
+$> npm run test
+```
+
