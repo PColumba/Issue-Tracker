@@ -1,11 +1,10 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Issues from '../Issues';
 import * as service from "../../service";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import rrd from "react-router-dom"; 
 import { IssueState } from '../../model';
 import EditIssue from '../EditIssue';
-import userEvent from '@testing-library/user-event';
 
 const mockService = service
 const testIssue = { id: "1", title: "Issue 1", description: "I am an issue 1", state: IssueState.PENDING }
