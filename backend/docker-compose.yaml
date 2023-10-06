@@ -6,3 +6,19 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
+  
+  db:
+    image: postgres:latest
+    container_name: db-container
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: issues
+    ports:
+      - "8888:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
